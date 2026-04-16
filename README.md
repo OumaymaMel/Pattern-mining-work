@@ -1,118 +1,123 @@
-TEMPORAL EVENT PATTERN MINING AND RULE DISCOVERY
+# Temporal Event Pattern Mining and Rule Discovery
 
-OVERVIEW
+## Overview
 This project focuses on temporal sequence mining of event log data to discover frequent patterns and generate temporal association rules. The workflow includes preprocessing, window-based sequence creation, sequential pattern mining, rule generation, and visualization of interestingness measures. The main goal is to analyze event logs and extract meaningful behavioral patterns over time.
 
-KEY FEATURES
+## Key Features
+- Load and preprocess event log data
+- Convert timestamps into structured event sequences
+- Perform window-based segmentation of event streams
+- Mine frequent sequential patterns using PrefixSpan / sequential mining
+- Generate temporal association rules
+- Compute interestingness measures including support (frequency), confidence, recall, lift, and J-measure
+- Analyze statistical relationships between rules
+- Apply dimensionality reduction using PCA and UMAP
+- Visualize rule distributions and clusters
 
-Load and preprocess event log data
-Convert timestamps into structured event sequences
-Perform window-based segmentation of event streams
-Mine frequent sequential patterns using PrefixSpan / sequential mining
-Generate temporal association rules
-Compute interestingness measures including support (frequency), confidence, recall, lift, and J-measure
-Analyze statistical relationships between rules
-Apply dimensionality reduction using PCA and UMAP
-Visualize rule distributions and clusters
-
-DATASET DESCRIPTION
+## Dataset Description
 The dataset is a tab-separated event log file containing the following columns:
 
-RecordID: Unique identifier for a user/session
-Category: Type of event (e.g., resize, click, load, tooltip)
-Start Time: Timestamp when the event occurred
-End Time: Timestamp when the event ended (optional)
-Attributes: Additional metadata describing the event
+- **RecordID**: Unique identifier for a user/session  
+- **Category**: Type of event (e.g., resize, click, load, tooltip)  
+- **Start Time**: Timestamp when the event occurred  
+- **End Time**: Timestamp when the event ended (optional)  
+- **Attributes**: Additional metadata describing the event  
 
-INSTALLATION
+## Installation
 The following Python packages are required:
 
+```bash
 pip install prefixspan
 pip install pymining
 pip install umap-learn
 pip install pandas numpy scikit-learn matplotlib seaborn
-
-PIPELINE STEPS
-
-DATA LOADING
+Pipeline Steps
+Data Loading
+```
 The dataset is loaded using pandas from a tab-separated file. A subset of rows may be used for testing.
-TIMESTAMP CONVERSION
+
+#Timestamp Conversion
+
 Start Time is converted into datetime format to enable temporal analysis.
-WINDOWING OF EVENTS
+
+#Windowing of Events
+
 Events are grouped into fixed time windows based on a maximum span (e.g., 10 seconds) and step size (e.g., 5 seconds).
 Each window contains a sequence of event categories.
 
-Example window sequence:
-appInit, resize, toolTip, create
+-Example sequence:
 
-SEQUENTIAL PATTERN MINING
-Frequent sequential patterns are extracted using sequential mining techniques.
+appInit → resize → toolTip → create
+Sequential Pattern Mining
+
+Frequent sequential patterns are extracted using PrefixSpan / PyMining.
 Patterns represent recurring sequences of events along with their frequency.
 
-Example patterns:
+-Examples:
+
 resize → resize (939 occurrences)
 readBoundData (1674 occurrences)
 appInit → resize (479 occurrences)
+Temporal Rule Generation
 
-TEMPORAL RULE GENERATION
-Frequent patterns are converted into temporal rules of the form:
+Frequent patterns are converted into temporal association rules:
 
 X → Y
 
-Where X is the antecedent sequence and Y is the consequent event.
+Where:
 
-Each rule is evaluated using:
+X = antecedent sequence
+Y = consequent event
 
-Frequency (support percentage)
-Confidence
-Recall
-Lift
-J-measure
-RULE FILTERING
-Rules are filtered based on thresholds such as high lift and high confidence to identify strong relationships.
-VISUALIZATION
-Several visual analysis methods are used:
-Correlation matrix of interestingness measures
-Pairplot of rule metrics
-PCA projection of rules into 2D space
-UMAP embedding for non-linear clustering visualization
+#Metrics used:
 
-OUTPUTS
+-Support (frequency)
+-Confidence
+-Recall
+-Lift
+-J-measure
+-Rule Filtering
 
-Frequent sequential patterns
-Temporal association rules
-Ranked rule list
-Statistical summaries of rule metrics
-PCA and UMAP visualizations
+Rules are filtered using thresholds such as high lift and high confidence to identify strong relationships.
 
-INSIGHTS
+#Visualization
+-Correlation matrix of interestingness measures
+-Pairplot of rule metrics
+-PCA projection (2D)
+-UMAP embedding for clustering
 
-Many events show strong self-repetition patterns (e.g., resize → resize)
-System-driven events such as readBoundData and toolTip are highly frequent
-Several high-confidence rules reflect UI interaction loops
-Rule embeddings show clustering of similar behavioral patterns
+#Outputs
+-Frequent sequential patterns
+-Temporal association rules
+-Ranked rule list
+-Statistical summaries
+-PCA and UMAP visualizations
 
-LIMITATIONS
+#Insights
+-Strong self-repetition patterns (e.g., resize → resize)
+-System events like readBoundData and toolTip are highly frequent
+-UI interaction loops appear in high-confidence rules
+-Clusters of similar behavioral patterns are visible in embeddings
 
-Self-repeating events can inflate confidence and lift values
-Support calculations are approximated from mined patterns rather than raw sequences
-Fixed windowing may not accurately represent true user sessions
-UMAP may show disconnected graphs due to sparsity in features
+#Limitations
+-Self-repeating events may inflate metrics (confidence/lift)
+-Support is approximated from mined patterns
+-Fixed windows may not reflect real user sessions
+-UMAP may produce sparse or disconnected clusters
 
-FUTURE IMPROVEMENTS
+#Future Improvements
+-Use session-based segmentation instead of fixed windows
+-Normalize repeated consecutive events
+-Compute support from raw sequences
+-Improve pattern mining using direct PrefixSpan outputs
+-Add anomaly detection for rare sequences
+-Use sequence embeddings for better clustering
 
-Use session-based segmentation instead of fixed windows
-Remove or normalize repeated consecutive events
-Compute support directly from raw event sequences
-Improve rule quality using PrefixSpan directly
-Add anomaly detection for unusual event sequences
-Use sequence embeddings for better clustering
-
-TECHNOLOGIES USED
-Python
-Pandas
-PrefixSpan / PyMining
-Scikit-learn
-UMAP
-Matplotlib
-Seaborn
+#Technologies Used
+-Python
+-Pandas
+-PrefixSpan / PyMining
+-Scikit-learn
+-UMAP
+-Matplotlib
+-Seaborn
