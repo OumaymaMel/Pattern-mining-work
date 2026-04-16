@@ -36,11 +36,11 @@ Data Loading
 ```
 The dataset is loaded using pandas from a tab-separated file. A subset of rows may be used for testing.
 
-#Timestamp Conversion
+Timestamp Conversion
 
 Start Time is converted into datetime format to enable temporal analysis.
 
-##Windowing of Events
+## Windowing of Events
 
 Events are grouped into fixed time windows based on a maximum span (e.g., 10 seconds) and step size (e.g., 5 seconds).
 Each window contains a sequence of event categories.
@@ -69,7 +69,7 @@ Where:
 X = antecedent sequence
 Y = consequent event
 
-##Metrics used:
+## Metrics used:
 
 -Support (frequency)
 -Confidence
@@ -86,26 +86,26 @@ Rules are filtered using thresholds such as high lift and high confidence to ide
 -PCA projection (2D)
 -UMAP embedding for clustering
 
-##Outputs
+## Outputs
 -Frequent sequential patterns
 -Temporal association rules
 -Ranked rule list
 -Statistical summaries
 -PCA and UMAP visualizations
 
-##Insights
+## Insights
 -Strong self-repetition patterns (e.g., resize → resize)
 -System events like readBoundData and toolTip are highly frequent
 -UI interaction loops appear in high-confidence rules
 -Clusters of similar behavioral patterns are visible in embeddings
 
-##Limitations
+## Limitations
 -Self-repeating events may inflate metrics (confidence/lift)
 -Support is approximated from mined patterns
 -Fixed windows may not reflect real user sessions
 -UMAP may produce sparse or disconnected clusters
 
-##Future Improvements
+## Future Improvements
 -Use session-based segmentation instead of fixed windows
 -Normalize repeated consecutive events
 -Compute support from raw sequences
@@ -113,7 +113,7 @@ Rules are filtered using thresholds such as high lift and high confidence to ide
 -Add anomaly detection for rare sequences
 -Use sequence embeddings for better clustering
 
-##Technologies Used
+## Technologies Used
 -Python
 -Pandas
 -PrefixSpan / PyMining
